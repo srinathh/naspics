@@ -7,49 +7,34 @@ import "@material/react-list/dist/list.css";
 export default class FolderTree extends Component{
 
     render(){
-        const parentListItems = this.props.data.parents.map((folderName)=>{
-            return(<FolderItem key={folderName} folderName={folderName} callback={this.props.callback} />)
+        const groups = this.props.data.map((group)=>{
+            const itemsList = group.items.map((item)=>{
+                return(<FolderItem key={item} folderName={item} callback={this.props.callback} />)
+            })
+            return (
+                <div key={group.title}>
+                    <ListGroupSubheader tag='h2'>{group.title}</ListGroupSubheader>
+                    <List singleSelection>
+                        {itemsList}
+                    </List>
+                    <ListDivider />
+                </div>
+            )
         })
-
-        const siblingsListItems = this.props.data.siblings.map((folderName)=>{
-            return(<FolderItem key={folderName} folderName={folderName} callback={this.props.callback} />)
-        })
-
-        const childrenListItems = this.props.data.children.map((folderName)=>{
-            return(<FolderItem key={folderName} folderName={folderName} callback={this.props.callback} />)
-        })
-
-        return(
+        return (
             <ListGroup>
-                <ListGroupSubheader tag='h2'>Parents</ListGroupSubheader>
-                <List singleSelection>
-                    {parentListItems}
-                </List>
-                <ListDivider />
-                <ListGroupSubheader tag='h2'>Children</ListGroupSubheader>
-                <List singleSelection>
-                    {childrenListItems}
-                </List>
-                <ListDivider />
-                <ListGroupSubheader tag='h2'>Siblings</ListGroupSubheader>
-                <List singleSelection>
-                    {siblingsListItems}
-                </List>
-                <ListDivider />
+                {groups}
             </ListGroup>
         )
     }
-
 
 }
 
 
 FolderTree.propTypes = {
-    data        : PropTypes.shape({
-        folder      : PropTypes.string.isRequired,
-        parents     : PropTypes.array.isRequired,
-        siblings    : PropTypes.array.isRequired,
-        children    : PropTypes.array.isRequired,
-    }),
+    data: PropTypes.arrayOf(PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        items: PropTypes.arrayOf(PropTypes.string).isRequired,
+    })),
     callback    : PropTypes.func.isRequired,
 }

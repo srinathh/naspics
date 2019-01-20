@@ -19,30 +19,10 @@ export default class App extends Component{
         this.state = {
             open:false,
             data:{
-                folder:"/Pictures/after_naisha/2013/2013-06",
-                pics: [/*
-                    "/Pictures/after_naisha/2013/2013-06/2013-06-25_063730.jpg",
-                    "/Pictures/after_naisha/2013/2013-06/2013-06-25_173514.jpg",*/
-                ],
-                parents:[
-                    "/Pictures",
-                    "/Pictures/after_naisha",
-                    "/Pictures/after_naisha/2013"
-                ],
-                siblings:[
-                    "/Pictures/after_naisha/2013/2013-07",
-                    "/Pictures/after_naisha/2013/2013-08",
-                    "/Pictures/after_naisha/2013/2013-09",
-                ],
-                children:[
-                    "/Pictures/after_naisha/2013/2013-06/before_birth",
-                ]
-            },
-            altData:{
                 curFolder:"/Pictures/after_naisha/2013/2013-06",
-                pics: [/*
+                pics: [
                     "/Pictures/after_naisha/2013/2013-06/2013-06-25_063730.jpg",
-                    "/Pictures/after_naisha/2013/2013-06/2013-06-25_173514.jpg",*/
+                    "/Pictures/after_naisha/2013/2013-06/2013-06-25_173514.jpg",
                 ],
                 nav:[
                     {
@@ -82,7 +62,7 @@ export default class App extends Component{
         return (
             <div>
                 <TopAppBar
-                    title={getTitle(this.state.data.folder)}
+                    title={getTitle(this.state.data.curFolder)}
                     navigationIcon={
                         <MaterialIcon
                             icon='menu'
@@ -96,7 +76,7 @@ export default class App extends Component{
                         open={this.state.open}
                     >
                         <DrawerContent>
-                            <FolderTree data={this.state.data} callback={this.onFolderSelect} />
+                            <FolderTree data={this.state.data.nav} callback={this.onFolderSelect} />
                             <a href="#"></a>
                         </DrawerContent>
                     </Drawer>
