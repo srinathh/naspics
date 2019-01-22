@@ -15,46 +15,29 @@ import "@material/react-list/dist/list.css";
 export default class App extends Component{
     constructor(props) {
         super(props);
-        // Don't call this.setState() here!
+        this.onFolderSelect= this.onFolderSelect.bind(this);
+        this.refreshPath= this.refreshPath.bind(this);
         this.state = {
             open:false,
-            data:{
-                curFolder:"/Pictures/after_naisha/2013/2013-06",
-                pics: [
-                    "/Pictures/after_naisha/2013/2013-06/2013-06-25_063730.jpg",
-                    "/Pictures/after_naisha/2013/2013-06/2013-06-25_173514.jpg",
-                ],
-                nav:[
-                    {
-                        title:"Parent Folders",
-                        items:[
-                            "/Pictures",
-                            "/Pictures/after_naisha",
-                            "/Pictures/after_naisha/2013"
-                        ]
-                    },
-                    {
-                        title:"Sub-Folders",
-                        items:[
-                            "/Pictures/after_naisha/2013/2013-06/before_birth",
-                        ]
-                    },
-                    {
-                        title:"Sibling Folders",
-                        items:[
-                            "/Pictures/after_naisha/2013/2013-07",
-                            "/Pictures/after_naisha/2013/2013-08",
-                            "/Pictures/after_naisha/2013/2013-09",
-                        ]
-                    }
-                ]
-            }
-        };
-        this.onFolderSelect= this.onFolderSelect.bind(this);
-      }
+            data:[ { title:"NasPics", items:[] } ]
+        }
+    }
 
-    onFolderSelect(name){
-        console.log("fetching path:"+name)
+    componentDidMount() {
+        this.refreshPath('/data/')
+    }
+    
+    refreshPath(path){
+        fetch(path)
+          .then(response => response.json())
+          .then(data => this.setState({ data }))
+          .catch(error => {
+              console.log(error)
+              this.setState({title:"NasPics",items:[]})});
+    }
+
+    onFolderSelect(path){
+        this.refreshPath('/data'+path)
         this.setState({open: false})
     }
 
@@ -62,7 +45,7 @@ export default class App extends Component{
         return (
             <div>
                 <TopAppBar
-                    title={getTitle(this.state.data.curFolder)}
+                    title={getTitle(this.state.data[0].title)}
                     navigationIcon={
                         <MaterialIcon
                             icon='menu'
@@ -76,12 +59,12 @@ export default class App extends Component{
                         open={this.state.open}
                     >
                         <DrawerContent>
-                            <FolderTree data={this.state.data.nav} callback={this.onFolderSelect} />
+                            <FolderTree data={this.state.data.slice(1)} callback={this.onFolderSelect} />
                             <a href="#"></a>
                         </DrawerContent>
                     </Drawer>
                     <DrawerAppContent>
-                        <Gallery pics={this.state.data.pics} prefix="http://192.168.1.112" />
+                        <Gallery pics={this.state.data[0].items} prefix="/pics" />
                     </DrawerAppContent>
                 </TopAppBarFixedAdjust>
             </div>

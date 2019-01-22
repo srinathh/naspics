@@ -11,6 +11,11 @@ export default class FolderTree extends Component{
             const itemsList = group.items.map((item)=>{
                 return(<FolderItem key={item} folderName={item} callback={this.props.callback} />)
             })
+
+            if(itemsList.length === 0){
+                return <div />
+            }
+
             return (
                 <div key={group.title}>
                     <ListGroupSubheader tag='h2'>{group.title}</ListGroupSubheader>

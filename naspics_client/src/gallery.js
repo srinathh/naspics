@@ -21,8 +21,7 @@ export default class Gallery extends React.Component {
                 items={images} 
                 lazyLoad={true}     
                 showThumbnails={false}
-                showBullets={true}
-                useBrowserFullscreen={false}
+                showIndex={true}
                 default={"/default.png"}
             />
         );

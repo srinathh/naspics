@@ -1,3 +1,7 @@
 export function getTitle(path){
-    return path.split("/").pop();
+    const ttl = path.split("/").pop();
+    if (ttl === ""){
+        return "/"
+    }
+    return ttl
 }
