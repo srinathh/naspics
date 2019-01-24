@@ -16,10 +16,9 @@ memories easily at home :-)
 NasPics consists of two folders a client & a server. The client needs to be first
 built separately an then integrated with the server in the server build step. To
 begin, first clone the repo
+'''
+git clone https://github.com/srinathh/naspics.git
 ```
-https://github.com/srinathh/naspics.git
-```
-
 
 ### Building the Client
 The client is the web interface exposed by the server. It is build on React using the 
@@ -56,3 +55,8 @@ Simply copy over the binary generated in step 4 or 6 wherever appropriate & run 
 - *http*: By default, the server attempts to bind to all network interfaces on port 9000. If you wnat
   to change this, set the right port via this option. eg. `-http localhost:9000`
 folder is elsewhere, pass the -
+
+## Installing as a Service
+A sample systemd service file is provided in the top level folder of the repository. You can adapt
+this for running your app as a service that automatically restarts when the NAS boots up. 
+A great How To in [this blog](https://medium.com/@benmorel/creating-a-linux-service-with-systemd-611b5c8b91d6)
