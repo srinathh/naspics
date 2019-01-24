@@ -1,0 +1,14 @@
+[Unit]
+Description=NasPics Server
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=your_user_name
+ExecStart=/path/to/naspics_server
+
+[Install]
+WantedBy=multi-user.target
