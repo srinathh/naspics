@@ -38,7 +38,8 @@ export default class App extends Component{
 
     onFolderSelect(path){
         this.refreshPath('/data'+path)
-        this.setState({open: false})
+        // test not closing folder for better nav experience
+        // this.setState({open: false})
     }
 
     render(){
@@ -57,6 +58,7 @@ export default class App extends Component{
                     <Drawer 
                         modal 
                         open={this.state.open}
+                        onClose={() => this.setState({open: false})}
                     >
                         <DrawerContent>
                             <FolderTree data={this.state.data.slice(1)} callback={this.onFolderSelect} />
